@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Raspadita Navideña</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://websanova.com/wScratchPad/wScratchPad.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('fondo-navidad.jpg'); /* Fondo principal */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scratch-zone {
+      width: 300px;
+      height: 100px;
+      margin: 10px;
+      position: relative;
+    }
+
+    h1 {
+      color: #fff;
+      text-shadow: 2px 2px #000;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎁 RASPÁ Y DESCUBRÍ TU BONO</h1>
+
+  <div id="bono1" class="scratch-zone"></div>
+  <div id="bono2" class="scratch-zone"></div>
+  <div id="bono3" class="scratch-zone"></div>
+
+  <script>
+    function iniciarRaspado(id, premio, clave) {
+      if (localStorage.getItem(clave)) {
+        $('#' + id).html('<p style="color:white;text-align:center;">Ya usaste este bono 🎉</p>');
+        return;
+      }
+
+      $('#' + id).wScratchPad({
+        width: 300,
+        height: 100,
+        image: premio, // Imagen oculta del premio
+        overlay: 'textura-metalica.png', // Textura gris metálica
+        scratchDown: function(e, percent) {
+          if (percent > 50) {
+            localStorage.setItem(clave, true);
+            alert('¡Felicidades! Descubriste tu bono 🎉');
+          }
+        }
+      });
+    }
+
+    iniciarRaspado('bono1', 'bono1.png', 'raspadita_bono1');
+    iniciarRaspado('bono2', 'bono2.png', 'raspadita_bono2');
+    iniciarRaspado('bono3', 'bono3.png', 'raspadita_bono3');
+  </script>
+
+</body>
+</html>
